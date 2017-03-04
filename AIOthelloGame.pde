@@ -42,17 +42,26 @@ void draw()
   }
   else if(gameState == 1)
   {
-    fill(0);
-    textFont(font);
-    text("Computer Score", 670,50);
-    text("2", 740,90);
-    text("Player Score", 685,170);
-    text("2", 740,210);
+    drawScoreBoard();
     text("Play as Black or White?", 640,370);
     ellipse(700, 430, 60, 60);
     fill(255);
     ellipse(800, 430, 60, 60);
   }
+}
+
+void drawScoreBoard()
+{
+  fill(0);
+  textFont(font);
+  text("Black Score", 695,50);
+  int bScore = b.getScore('B');
+  text(bScore, 740,90);
+    
+  text("White Score", 685,170);
+  int wScore = b.getScore('W');
+  text(wScore, 740,90);
+  text(wScore, 740,210);
 }
 
 void drawBoard()
