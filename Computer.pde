@@ -6,9 +6,9 @@ class Computer
   {
     colour = c;
   }
-  
+  /*
   int[] makeMove(Board b)
   {
-    
   }
+  */
 }
