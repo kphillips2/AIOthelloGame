@@ -2,14 +2,12 @@ Board b = new Board();
 Computer computer;
 
 int gameState = 0;  // 0 - ask configuration, 1 - ask colour, 3 - black turn, 4 - white turn, 5 - game over
-PFont font = createFont("Segoe UI Light", 22);
-
 char playerColour;
 
 void setup()
 {
-  size(900,600);
-  background(98,95,63);
+  size(910,610);
+  textFont(createFont("Segoe UI Light", 22));
 }
 
 void draw()
@@ -19,53 +17,54 @@ void draw()
   drawBoard();
   fill(255);
   strokeWeight(2);
-  rect(620,20, 250,560);
+  rect(630,30, 250,560);
   strokeWeight(1);
-    
+  
+  //Select Initial Configuration
   if(gameState == 0)
   {    
     fill(0);
-    textFont(font);
-    text("Select Configuration:", 650,50);
+    text("Select Configuration:", 660,60);
     fill(255);
-    ellipse(710, 160, 60, 60);
-    ellipse(780, 230, 60, 60);
+    ellipse(720, 170, 60, 60);
+    ellipse(790, 240, 60, 60);
     fill(0);
-    ellipse(710, 230, 60, 60);
-    ellipse(780, 160, 60, 60);
+    ellipse(720, 240, 60, 60);
+    ellipse(790, 170, 60, 60);
     
-    ellipse(710, 370, 60, 60);
-    ellipse(780, 440, 60, 60);
+    ellipse(720, 380, 60, 60);
+    ellipse(790, 450, 60, 60);
     fill(255);
-    ellipse(710, 440, 60, 60);
-    ellipse(780, 370, 60, 60);
+    ellipse(720, 450, 60, 60);
+    ellipse(790, 380, 60, 60);
   }
+  
+  //Select Black or White
   else if(gameState == 1)
   {
     drawScoreBoard();
-    text("Play as Black or White?", 640,370);
-    ellipse(700, 430, 60, 60);
+    text("Play as Black or White?", 650,370);
+    fill(0);
+    ellipse(710, 440, 60, 60);
     fill(255);
-    ellipse(800, 430, 60, 60);
+    ellipse(810, 440, 60, 60);
   }
 }
 
 void drawScoreBoard()
 {
   fill(0);
-  textFont(font);
-  text("Black Score", 695,50);
-  int bScore = b.getScore('B');
-  text(bScore, 740,90);
+  text("Black Score", 705,60);
+  text(b.getScore('B'), 750,100);
     
-  text("White Score", 685,170);
-  int wScore = b.getScore('W');
-  text(wScore, 740,90);
-  text(wScore, 740,210);
+  text("White Score", 695,180);
+  text(b.getScore('W'), 750,220);
 }
 
 void drawBoard()
 {
+  addCoordinates();
+  
   for(int i = 0; i < 8; i++)
     for(int j = 0; j < 8; j++)
     {
@@ -74,46 +73,72 @@ void drawBoard()
       else
         fill(50,170,50);
     
-      rect(20 + j*70, 20 + i*70, 70,70);
+      rect(30 + j*70, 30 + i*70, 70,70);
       
+      // Draw tokens
       if(b.board[i][j] == 'W')
       {
         fill(255);
-        ellipse((20 + j*70) + 35, (20 + i*70) + 35, 60, 60);
+        ellipse((30 + j*70) + 35, (30 + i*70) + 35, 60, 60);
       }
       else if(b.board[i][j] == 'B')
       {
         fill(0);
-        ellipse((20 + j*70) + 35, (20 + i*70) + 35, 60, 60);
+        ellipse((30 + j*70) + 35, (30 + i*70) + 35, 60, 60);
       }
     }
 }
 
+void addCoordinates()
+{
+  fill(0);
+
+  text("A", 60, 25);
+  text("B", 130, 25);
+  text("C", 200, 25);
+  text("D", 270, 25);
+  text("E", 340, 25);
+  text("F", 410, 25);
+  text("G", 480, 25);
+  text("H", 550, 25);
+  
+  text("1", 10, 70);
+  text("2", 10, 140);
+  text("3", 10, 210);
+  text("4", 10, 280);
+  text("5", 10, 350);
+  text("6", 10, 420);
+  text("7", 10, 490);
+  text("8", 10, 560);
+}
+
 void mousePressed()
 {
+  // Check if one of the configurations was clicked
   if(gameState == 0)
   {
-    if(mouseX > 680 && mouseX < 810 && mouseY > 130 && mouseY < 260)
+    if(mouseX > 690 && mouseX < 820 && mouseY > 140 && mouseY < 270)
     {
       b.setLayout(1);
       gameState = 1;
     }
-    else if(mouseX > 680 && mouseX < 810 && mouseY > 340 && mouseY < 470)
+    else if(mouseX > 690 && mouseX < 820 && mouseY > 350 && mouseY < 480)
     {
       b.setLayout(0);
       gameState = 1;
     }
   }
   
+  // Check if black or white circle was clicked
   else if(gameState == 1)
   {
-    if(mouseX > 670 && mouseX < 730 && mouseY > 400 && mouseY < 460)
+    if(mouseX > 680 && mouseX < 740 && mouseY > 410 && mouseY < 470)
     {
       computer = new Computer('W');
       playerColour = 'B';
       gameState = 2;
     }
-    else if(mouseX > 770 && mouseX < 830 && mouseY > 400 && mouseY < 460)
+    else if(mouseX > 780 && mouseX < 840 && mouseY > 410 && mouseY < 470)
     {
       computer = new Computer('B');
       playerColour = 'W';
