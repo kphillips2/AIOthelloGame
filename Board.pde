@@ -86,13 +86,27 @@ class Board
    * if toFlip is true then it will flip the pieces if a valid move. Checks the 8
    * possible directions
    * @param color either 'B' or 'W'
-   * @param xindex x index of the move
-   * @param yindex y index of the move
+   * @param row row index of the move
+   * @param column column index of the move
    * @param toFlip tell is the move is actually being played
    * @return number of tokens that would be flipped
    */
-  private int checkMove(char colour, int xindex, int yindex, boolean toFlip){
-	  return 0;
+  private int checkMove(char colour, int row, int column, boolean toFlip){
+    if(board[row][column] != 'E'){
+      return 0;
+    }
+    int total = 0;
+    for(int rowincrement = -1; rowincrement <= 1; rowincrement++){
+      for(int columnincrement = -1; columnincrement <= 1; columnincrement++){
+        int currentCheck = checkDirection(colour, row + rowincrement, column + columnincrement,
+                                          toFlip, rowincrement, columnincrement);
+        if (currentCheck != -1)
+          total += currentCheck;
+      }
+    }
+    if (toFlip && total > 0)
+      board[row][column] = colour;
+	  return total;
   }
   
   /**
