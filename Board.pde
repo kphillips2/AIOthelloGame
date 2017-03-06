@@ -96,24 +96,53 @@ class Board
   }
   
   /**
+   * Must start on a white piece
    * Returns the number of pieces that can be flipped in a certain direction
    * if toFlip is true then it will flip the pieces if possible to flip in that.
-   * Direction is indicated by the x and y increments.
+   * Direction is indicated by the row and column increments.
    * base the examples off of the board at the top of file
-   * Ex: if xincrement is 0 and yincrement is -1 then the direction is North
-   *     if xincrement is 1 and yincrement is 1 then the direction is South East
+   * Ex: if rowincrement is 0 and columnincrement is -1 then the direction is West
+   *     if rowincrement is 1 and columnincrement is 1 then the direction is South East
    * @param color either 'B' or 'W'
-   * @param xindex 		x index of the move
-   * @param yindex 		y index of the move
+   * @param row 		  row index of the move
+   * @param column 		column index of the move
    * @param toFlip 		tell is the move is actually being played
-   * @param xincrement  tells the x direction to iterate can either be -1, 0, or 1
-   * @param yincrement  tells the y direction to iterate can either be -1, 0, or 1
-   * @return number of tokens that would be flipped
+   * @param rowincrement  tells the row direction to iterate can either be -1, 0, or 1
+   * @param columnincrement  tells the column direction to iterate can either be -1, 0, or 1
+   * @return number of tokens that would be flipped, -1 none flipped in direction
    */
-  private int checkDirection(char colour, int xindex, int yindex, boolean toFlip,
-							 int xincrement, int yincrement){
-    if (xincrement == 0 && yincrement == 0) // no direction indicated
-      return 0;  
-	  return 0;
+  private int checkDirection(char colour, int row, int column, boolean toFlip,
+							 int rowincrement, int columnincrement){
+    if (columnincrement == 0 && rowincrement == 0) // no direction indicated
+      return -1;
+    else if(column < 0 || column > 7 || row < 0 || row > 7)
+      return -1;
+    else if(board[row][column] == colour)
+      return 0;
+    else if(board[row][column] == getOppositeColour(colour)){
+      // recursively check next piece
+      int checkedMoves = checkDirection(colour, row + rowincrement, 
+                                        column + columnincrement, 
+                                        toFlip, rowincrement, columnincrement);
+      if(checkedMoves == -1)
+        return -1;
+      else if (toFlip)
+        board[row][column] = colour;
+      return checkedMoves + 1; // This is a successfull direction
+      
+    }else // this case catches if the space is empty
+      return -1;
+    }
+  }
+  /**
+   * gets the opposite colour. Must be given either 'W' or 'B'
+   */
+  private char getOppositeColour(char colour) throws IllegalArgumentException{
+    if (colour == 'W')
+      return 'B';
+    else if (colour == 'B')
+      return 'W';
+    else
+      throw new IllegalArgumentException();    
   }
 }
