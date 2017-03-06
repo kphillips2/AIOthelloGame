@@ -45,9 +45,9 @@ class Board
     }
   }
 
-  public boolean isLegal(int x, int y, char colour)
+  public boolean isLegal(int row, int column, char colour)
   {
-    return 0 < checkMove(colour, x, y, false);
+    return 0 < checkMove(colour, row, column, false);
     
   }
 
@@ -65,9 +65,9 @@ class Board
     return score;
   }
 
-  public boolean makeMove(int x, int y, char colour)
+  public boolean makeMove(int row, int column, char colour)
   {
-    return 0 < checkMove(colour, x, y, true);
+    return 0 < checkMove(colour, row, column, true);
   }
   
   /**
@@ -106,7 +106,7 @@ class Board
     }
     if (toFlip && total > 0)
       board[row][column] = colour;
-	  return total;
+    return total;
   }
   
   /**
