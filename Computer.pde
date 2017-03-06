@@ -1,14 +1,13 @@
-class Computer
+public class Computer extends Player
 {
-  char colour;
-  
   Computer(char c)
   {
-    colour = c;
+    super(c);
   }
-  /*
+  
   int[] makeMove(Board b)
   {
+    int[] moves = {0,0};
+    return moves;
   }
-  */
 }
