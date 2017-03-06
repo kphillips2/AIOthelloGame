@@ -132,7 +132,6 @@ class Board
       
     }else // this case catches if the space is empty
       return -1;
-    }
   }
   /**
    * gets the opposite colour. Must be given either 'W' or 'B'
@@ -145,4 +144,5 @@ class Board
     else
       throw new IllegalArgumentException();    
   }
+  
 }
