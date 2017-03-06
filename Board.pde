@@ -77,7 +77,7 @@ class Board
    * @param	 color either 'B' or 'W'
    * @return 	   two-dimensional array of xindex, yindex, num_flipped
    */
-  private int[][] checkBoard(char colour){
+  public int[][] checkBoard(char colour){
 	  return new int[0][3];
   }
   
