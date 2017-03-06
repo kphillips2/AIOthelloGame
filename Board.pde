@@ -5,15 +5,15 @@
  * and y is numbers increasing downward
  * we will not use letters however
  * Ex: (I is where we Init)
- *  	0	1	2	3	4	5	6	7
- *	 0 ___|___|___|___|___|___|___|___
- *	 1 ___|___|___|___|___|___|___|___
- *	 2 ___|___|___|___|___|___|___|___
- *	 3 ___|___|___|_I_|_I_|___|___|___
- *	 4 ___|___|___|_I_|_I_|___|___|___
- *	 5 ___|___|___|___|___|___|___|___
- *	 6 ___|___|___|___|___|___|___|___
- *	 7    |   |   |   |   |   |   |   
+ *      0   1   2   3   4   5   6   7
+ *   0 ___|___|___|___|___|___|___|___
+ *   1 ___|___|___|___|___|___|___|___
+ *   2 ___|___|___|___|___|___|___|___
+ *   3 ___|___|___|_I_|_I_|___|___|___
+ *   4 ___|___|___|_I_|_I_|___|___|___
+ *   5 ___|___|___|___|___|___|___|___
+ *   6 ___|___|___|___|___|___|___|___
+ *   7    |   |   |   |   |   |   |   
  */
 
 class Board
@@ -83,7 +83,8 @@ class Board
   
   /**
    * Returns the number of pieces that can be flipped by a certains colors move
-   * if toFlip is true then it will flip the pieces if a valid move.
+   * if toFlip is true then it will flip the pieces if a valid move. Checks the 8
+   * possible directions
    * @param color either 'B' or 'W'
    * @param xindex x index of the move
    * @param yindex y index of the move
@@ -111,6 +112,8 @@ class Board
    */
   private int checkDirection(char colour, int xindex, int yindex, boolean toFlip,
 							 int xincrement, int yincrement){
+    if (xincrement == 0 && yincrement == 0) // no direction indicated
+      return 0;  
 	  return 0;
   }
 }
