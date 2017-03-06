@@ -47,9 +47,7 @@ class Board
 
   public boolean isLegal(int x, int y, char colour)
   {
-    //Check to see if specified move is legal for the
-    //specified colour.
-    return true;
+    return 0 < checkMove(colour, x, y, false);
     
   }
 
@@ -85,7 +83,7 @@ class Board
    * @return 	   two-dimensional array of xindex, yindex, num_flipped
    */
   private int[][] checkBoard(char colour){
-	return new int[0][3]
+	  return new int[0][3];
   }
   
   /**
@@ -98,7 +96,7 @@ class Board
    * @return number of tokens that would be flipped
    */
   private int checkMove(char colour, int xindex, int yindex, boolean toFlip){
-	return 0
+	  return 0;
   }
   
   /**
@@ -116,8 +114,8 @@ class Board
    * @param yincrement  tells the y direction to iterate can either be -1, 0, or 1
    * @return number of tokens that would be flipped
    */
-  private int checkDirection(char colour int xindex, int yindex, boolean toFlip,
-							 int xincrement, yincrement){
-	  return 0
+  private int checkDirection(char colour, int xindex, int yindex, boolean toFlip,
+							 int xincrement, int yincrement){
+	  return 0;
   }
 }
