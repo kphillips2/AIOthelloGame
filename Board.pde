@@ -65,14 +65,9 @@ class Board
     return score;
   }
 
-  public void makeMove(int x, int y, char colour)
+  public boolean makeMove(int x, int y, char colour)
   {
-    if(isLegal(x,y,colour))
-    {
-      //Place character in array
-      //Check for tiles and flip
-      
-    }
+    return 0 < checkMove(colour, x, y, true);
   }
   
   /**
