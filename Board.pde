@@ -96,10 +96,10 @@ class Board
       return 0;
     }
     int total = 0;
-    for(int rowincrement = -1; rowincrement <= 1; rowincrement++){
-      for(int columnincrement = -1; columnincrement <= 1; columnincrement++){
-        int currentCheck = checkDirection(colour, row + rowincrement, column + columnincrement,
-                                          toFlip, rowincrement, columnincrement);
+    for(int rowIncrement = -1; rowIncrement <= 1; rowIncrement++){
+      for(int columnIncrement = -1; columnIncrement <= 1; columnIncrement++){
+        int currentCheck = checkDirection(colour, row, column,
+                                          toFlip, rowIncrement, columnIncrement);
         if (currentCheck != -1)
           total += currentCheck;
       }
@@ -110,7 +110,6 @@ class Board
   }
   
   /**
-   * Must start on a white piece
    * Returns the number of pieces that can be flipped in a certain direction
    * if toFlip is true then it will flip the pieces if possible to flip in that.
    * Direction is indicated by the row and column increments.
@@ -121,13 +120,15 @@ class Board
    * @param row 		  row index of the move
    * @param column 		column index of the move
    * @param toFlip 		tell is the move is actually being played
-   * @param rowincrement  tells the row direction to iterate can either be -1, 0, or 1
-   * @param columnincrement  tells the column direction to iterate can either be -1, 0, or 1
+   * @param rowIncrement  tells the row direction to iterate can either be -1, 0, or 1
+   * @param columnIncrement  tells the column direction to iterate can either be -1, 0, or 1
    * @return number of tokens that would be flipped, -1 none flipped in direction
    */
   private int checkDirection(char colour, int row, int column, boolean toFlip,
-							 int rowincrement, int columnincrement){
-    if (columnincrement == 0 && rowincrement == 0) // no direction indicated
+							 int rowIncrement, int columnIncrement){
+    row += rowIncrement;
+    column += columnIncrement;
+    if (columnIncrement == 0 && rowIncrement == 0) // no direction indicated
       return -1;
     else if(column < 0 || column > 7 || row < 0 || row > 7)
       return -1;
@@ -135,9 +136,9 @@ class Board
       return 0;
     else if(board[row][column] == getOppositeColour(colour)){
       // recursively check next piece
-      int checkedMoves = checkDirection(colour, row + rowincrement, 
-                                        column + columnincrement, 
-                                        toFlip, rowincrement, columnincrement);
+      int checkedMoves = checkDirection(colour, row + rowIncrement, 
+                                        column + columnIncrement, 
+                                        toFlip, rowIncrement, columnIncrement);
       if(checkedMoves == -1)
         return -1;
       else if (toFlip)
@@ -147,6 +148,7 @@ class Board
     }else // this case catches if the space is empty
       return -1;
   }
+  
   /**
    * gets the opposite colour. Must be given either 'W' or 'B'
    */
