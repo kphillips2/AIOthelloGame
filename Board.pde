@@ -18,6 +18,9 @@
 
 class Board
 {
+  // stored as black move, white move
+  int[][] lastTwoMoves = {{-1, -1}, {-1, -1}};
+  char[][] previousState;
   char[][] board = new char[8][8];
   
   Board()
@@ -43,6 +46,7 @@ class Board
       board[3][4] = 'B';
       board[4][4] = 'W';
     }
+    makeNewPreviousState();
   }
 
   public boolean isLegal(int row, int column, char colour)
@@ -65,10 +69,40 @@ class Board
     return score;
   }
 
+  /**
+   * reverts to the last black move
+   */
+  public void revertMove(){
+    
+  }
+  
+    
+  /**
+   * I assume he wants us to return to the last players move.
+   * In that case we need to store the last two moves. This function
+   * will do any updateing of previous states necessary.
+   */
+  private void updatePreviousState(){
+    
+  }
+  
+  
+  private void makeNewPreviousState(){
+    previousState = new char[8][8];
+    for(int i = 0; i < 8; i++)
+      for(int j = 0; j < 8; j++)
+        previousState[i][j] = board[i][j];
+  }
+  
   public boolean makeMove(int row, int column, char colour)
   {
-    return 0 < checkMove(colour, row, column, true);
+    if (0 < checkMove(colour, row, column, true)){
+      updatePreviousState();
+      return true;
+    }else
+      return false;
   }
+  
   
   /**
    * Returns a double array of the possible moves for a player as well as the 
