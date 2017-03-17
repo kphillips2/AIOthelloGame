@@ -20,15 +20,14 @@ class Board
 {
   // stored as black move, white move
   int[][] lastTwoMoves = {{-1, -1}, {-1, -1}};
-  char[][] previousState;
+  ArrayList<Move> moves = new ArrayList<Move>();
   char[][] board = new char[8][8];
   
   Board()
   {
-    for(int i = 0; i < 8; i++)
-      for(int j = 0; j < 8; j++)
-        board[i][j] = 'E';
+    setUpBoard();
   }
+  
   
   void setLayout(int layout)
   {
@@ -46,7 +45,6 @@ class Board
       board[3][4] = 'B';
       board[4][4] = 'W';
     }
-    makeNewPreviousState();
   }
 
   public boolean isLegal(int row, int column, char colour)
@@ -70,34 +68,34 @@ class Board
   }
 
   /**
-   * reverts to the last black move
+   * reverts the last two moves
    */
-  public void revertMove(){
-    
+  public void undo(){
+    if(moves.size() < 2)
+      return;
+    moves.remove(moves.size() - 1);
+    moves.remove(moves.size() - 1);
+    setUpBoard();
   }
   
-    
-  /**
-   * I assume he wants us to return to the last players move.
-   * In that case we need to store the last two moves. This function
-   * will do any updateing of previous states necessary.
-   */
-  private void updatePreviousState(){
-    
+  public void reset(){
+    moves = new ArrayList<Move>();
+    setUpBoard();
   }
   
-  
-  private void makeNewPreviousState(){
-    previousState = new char[8][8];
+  private void setUpBoard(){
     for(int i = 0; i < 8; i++)
       for(int j = 0; j < 8; j++)
-        previousState[i][j] = board[i][j];
+        board[i][j] = 'E';
+    for(Move m : moves){
+      makeMove(m.row, m.column, m.colour);
+    }
   }
   
   public boolean makeMove(int row, int column, char colour)
   {
     if (0 < checkMove(colour, row, column, true)){
-      updatePreviousState();
+      moves.add(new Move(row, column, colour));
       return true;
     }else
       return false;
@@ -111,7 +109,7 @@ class Board
    * @param	 color either 'B' or 'W'
    * @return 	   two-dimensional array of xindex, yindex, num_flipped
    */
-  public int[][] checkBoard(char colour){
+  public int[][] possibleMoves(char colour){
 	  return new int[0][3];
   }
   
@@ -193,6 +191,21 @@ class Board
       return 'W';
     else
       throw new IllegalArgumentException();    
+  }
+  
+  /**
+   * Used to store the move data
+   */
+  private class Move{
+    public final int row;
+    public final int column;
+    public final char colour;
+    
+    Move(int row, int column, char colour){
+      this.row = row;
+      this.column = column;
+      this.colour = colour;
+    }
   }
   
 }
