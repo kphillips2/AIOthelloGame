@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 /*
  * https://en.wikipedia.org/wiki/Reversi
  * As per Othello layout origin is in top right.
@@ -101,6 +102,16 @@ class Board
       return false;
   }
   
+  public int getNumberPresent(char colour){
+    int total = 0;
+    for(int row = 0; row < 8; row++){
+      for(int column = 0; column < 8; column++){
+        if(board[row][column] == colour)
+          total++;
+      }
+    }
+    return total;
+  }
   
   /**
    * Returns a double array of the possible moves for a player as well as the 
