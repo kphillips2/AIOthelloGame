@@ -7,7 +7,14 @@ public class Computer extends Player
   
   int[] makeMove(Board b)
   {
-    int[] moves = {0,0};
-    return moves;
+    int[] move = new int[2];
+    ArrayList<int[]> moves = b.possibleMoves(colour);
+    if(moves.size() == 0)
+      move[1] = move[0] = -1;
+    else{
+      move[0] = moves.get(0)[0];
+      move[1] = moves.get(0)[1];
+    }
+    return move;
   }
 }
