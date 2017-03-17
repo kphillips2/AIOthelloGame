@@ -84,9 +84,9 @@ class Board
   }
   
   private void setUpBoard(){
-    for(int i = 0; i < 8; i++)
-      for(int j = 0; j < 8; j++)
-        board[i][j] = 'E';
+    for(int row = 0; row < 8; row++)
+      for(int column = 0; column < 8; column++)
+        board[row][column] = 'E';
     for(Move m : moves){
       makeMove(m.row, m.column, m.colour);
     }
@@ -105,12 +105,25 @@ class Board
   /**
    * Returns a double array of the possible moves for a player as well as the 
    * number of Pieces that can be flipped from the move.
-   * Format: [ [ row, column, num_flipped], ... ]
+   * Format: [ [ row, column, numFlipped], ... ]
    * @param	 color either 'B' or 'W'
    * @return 	   two-dimensional array of xindex, yindex, num_flipped
+   *             empty if no possible moves
    */
-  public int[][] possibleMoves(char colour){
-	  return new int[0][3];
+  public ArrayList<int[]> possibleMoves(char colour){
+    ArrayList<int[]> stats = new ArrayList<int[]>();
+    for(int row = 0; row < 8; row++){
+      for(int column = 0; column < 8; column++){
+        if(board[row][column] == 'E'){
+          int numFlipped = checkMove(colour, row, column, false);
+          if(numFlipped > 0){
+            int[] moveStats = {row, column, numFlipped};
+            stats.add(moveStats);
+          }
+        }
+      }
+    }
+    return stats;
   }
   
   /**
