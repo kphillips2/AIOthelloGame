@@ -1,8 +1,15 @@
 Board b = new Board();
 Computer computer;
+Human human;
 
-int gameState = 0;  // 0 - ask configuration, 1 - ask colour, 3 - black turn, 4 - white turn, 5 - game over
-char playerColour;
+int gameState = 0;  // 0 - ask configuration 
+                    // 1 - ask color 
+                    // 2 - confirm AI will make a move
+                    // 3 - AI makes move
+                    // 4 - confirm after AI can't move
+                    // 5 - confirm after AI move
+                    // 6 - player makes move
+                    // 7 - confirm after player move
 
 void setup()
 {
@@ -49,6 +56,61 @@ void draw()
     fill(255);
     ellipse(810, 440, 60, 60);
   }
+  
+  else if(gameState == 2)
+  {
+    drawScoreBoard();
+    fill(0);
+    text("A is about to make", 665,370);
+    text("a move.", 720,390);
+    text("Please confirm.", 680,420);
+    drawConfirmButton();
+  }
+  
+  else if(gameState == 3)
+  {
+    drawScoreBoard();
+    int[] move = computer.makeMove(b);
+
+    if(move[0] == -1)
+    {
+      gameState = 4;
+    }
+    else
+    {
+      b.makeMove(move[0], move[1], computer.getColor());
+      gameState = 5;
+    }
+  }
+  
+  else if(gameState == 4 || gameState == 5 || gameState == 7)
+  {
+    drawScoreBoard();
+    fill(0);
+    if(gameState == 4)
+      text("A cannot make a move.", 650,370);
+    else
+      text("Please confirm.", 660,370);
+      
+    drawConfirmButton();
+  }
+  
+  else if(gameState == 6)
+  {
+    drawScoreBoard();
+    fill(0);
+    text("Please make a move.", 660,370);
+  }
+}
+
+void drawConfirmButton()
+{
+  fill(255);
+  strokeWeight(2);
+  rect(655,440, 200,50);
+  strokeWeight(1);
+  fill(0);
+  text("CONFIRM", 710,475);
 }
 
 void drawScoreBoard()
@@ -135,14 +197,24 @@ void mousePressed()
     if(mouseX > 680 && mouseX < 740 && mouseY > 410 && mouseY < 470)
     {
       computer = new Computer('W');
-      playerColour = 'B';
-      gameState = 2;
+      human = new Human('B');
+      gameState = 6;
     }
     else if(mouseX > 780 && mouseX < 840 && mouseY > 410 && mouseY < 470)
     {
       computer = new Computer('B');
-      playerColour = 'W';
+      human = new Human('W');
       gameState = 2;
+    }
+  }
+  
+  //Check if confirmed
+  else if(gameState == 2 || gameState == 4 || gameState == 5 || gameState == 7)
+  {
+    if(mouseX > 655 && mouseX < 855 && mouseY > 440 && mouseY < 490)
+    {
+      if(gameState == 2 || gameState == 7) gameState = 3;
+      else gameState = 6;
     }
   }
 }
