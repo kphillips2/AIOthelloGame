@@ -90,7 +90,7 @@ void draw()
     if(gameState == 4)
       text("A cannot make a move.", 650,370);
     else
-      text("Please confirm.", 660,370);
+      text("Please confirm.", 685,370);
       
     drawConfirmButton();
   }
@@ -215,6 +215,17 @@ void mousePressed()
     {
       if(gameState == 2 || gameState == 7) gameState = 3;
       else gameState = 6;
+    }
+  }
+  
+  //Pass clicked coordinates to Human, make move if possible
+  else if(gameState == 6)
+  {
+    int[] move = human.makeMove(b, mouseX, mouseY);
+    if(move[0] != -1)
+    {
+      boolean success = b.makeMove(move[0], move[1], human.getColor());
+      if(success) gameState = 7;
     }
   }
 }

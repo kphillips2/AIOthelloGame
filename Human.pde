@@ -10,9 +10,20 @@ public class Human extends Computer{
     super(c);
   }
   
-  int[] makeMove(Board b){
-    int[] moves = {0,0};
-    return moves;
+  // Uses clicked coordinates of mouse to determine move
+  int[] makeMove(Board b, int x, int y){
+    int[] move = {-1,-1};
+    
+    for(int i = 0; i < 8; i++)
+      for(int j = 0; j < 8; j++)
+      {
+        if(x > 30 + j*70 && x < 100 + j*70 && y > 30 + i*70 && y < 100 + i*70)
+        {
+          move[0] = i;
+          move[1] = j;
+          return move;
+        }
+      }
+    return move;
   }
-  
 }
