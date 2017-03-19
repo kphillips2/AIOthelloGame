@@ -192,8 +192,8 @@ class Board
       return 0;
     else if(board[row][column] == getOppositeColour(colour)){
       // recursively check next piece
-      int checkedMoves = checkDirection(colour, row + rowIncrement, 
-                                        column + columnIncrement, 
+      int checkedMoves = checkDirection(colour, row, 
+                                        column, 
                                         toFlip, rowIncrement, columnIncrement);
       if(checkedMoves == -1)
         return -1;
