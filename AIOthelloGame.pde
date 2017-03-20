@@ -1,3 +1,5 @@
+// Press 'q' to quit
+
 Board b = new Board();
 Computer computer;
 Human human;
@@ -10,6 +12,8 @@ int gameState = 0;  // 0 - ask configuration
                     // 5 - confirm after AI move
                     // 6 - player makes move
                     // 7 - confirm after player move
+                    // 8 - player's turn, but they have no possible moves
+                    // 9 - game over
 
 void setup()
 {
@@ -57,6 +61,7 @@ void draw()
     ellipse(810, 440, 60, 60);
   }
   
+  //Announce A will make a move
   else if(gameState == 2)
   {
     drawScoreBoard();
@@ -67,6 +72,7 @@ void draw()
     drawConfirmButton();
   }
   
+  //A makes its move
   else if(gameState == 3)
   {
     drawScoreBoard();
@@ -74,7 +80,10 @@ void draw()
 
     if(move[0] == -1)
     {
-      gameState = 4;
+      if(b.possibleMoves(human.getColor()).size() == 0)
+        gameState = 9;
+      else
+        gameState = 4;
     }
     else
     {
@@ -83,23 +92,34 @@ void draw()
     }
   }
   
-  else if(gameState == 4 || gameState == 5 || gameState == 7)
+  //Have user confirm
+  else if(gameState == 4 || gameState == 5 || gameState == 7 || gameState == 8)
   {
     drawScoreBoard();
     fill(0);
     if(gameState == 4)
       text("A cannot make a move.", 650,370);
+    else if(gameState == 8)
+      text("You cannot make a move.", 648,370);
     else
       text("Please confirm.", 685,370);
       
     drawConfirmButton();
   }
   
+  //Ask user to make move
   else if(gameState == 6)
   {
     drawScoreBoard();
     fill(0);
     text("Please make a move.", 660,370);
+  }
+  
+  else if(gameState == 9)
+  {
+    drawScoreBoard();
+    fill(0);
+    text("GAME OVER", 690,370);
   }
 }
 
@@ -174,6 +194,20 @@ void addCoordinates()
   text("8", 10, 560);
 }
 
+// Checks whether or not human has moves, if not, check if game over
+void enterHumanTurn()
+{
+  if(b.possibleMoves(human.getColor()).size() == 0)
+  {
+    if(b.possibleMoves(computer.getColor()).size() == 0)
+      gameState = 9;
+    else
+      gameState = 8;
+  }
+  else
+    gameState = 6;
+}
+
 void mousePressed()
 {
   // Check if one of the configurations was clicked
@@ -198,7 +232,7 @@ void mousePressed()
     {
       computer = new Computer('W');
       human = new Human('B');
-      gameState = 6;
+      enterHumanTurn();
     }
     else if(mouseX > 780 && mouseX < 840 && mouseY > 410 && mouseY < 470)
     {
@@ -209,13 +243,13 @@ void mousePressed()
   }
   
   //Check if confirmed
-  else if(gameState == 2 || gameState == 4 || gameState == 5 || gameState == 7)
+  else if(gameState == 2 || gameState == 4 || gameState == 5 || gameState == 7 || gameState == 8)
   {
     if(mouseX > 655 && mouseX < 855 && mouseY > 440 && mouseY < 490)
     {
       if(gameState == 2) gameState = 3;
-      else if(gameState == 7) gameState = 2;
-      else gameState = 6;
+      else if(gameState == 7 || gameState == 8) gameState = 2;
+      else enterHumanTurn();
     }
   }
   
@@ -229,4 +263,10 @@ void mousePressed()
       if(success) gameState = 7;
     }
   }
+}
+
+// Allow quit game by pressing 'q'
+void keyPressed()
+{
+  if(key == 'q') exit();
 }
