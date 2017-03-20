@@ -213,7 +213,8 @@ void mousePressed()
   {
     if(mouseX > 655 && mouseX < 855 && mouseY > 440 && mouseY < 490)
     {
-      if(gameState == 2 || gameState == 7) gameState = 3;
+      if(gameState == 2) gameState = 3;
+      else if(gameState == 7) gameState = 2;
       else gameState = 6;
     }
   }
