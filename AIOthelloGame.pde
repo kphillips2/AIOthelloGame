@@ -100,7 +100,7 @@ void draw()
     if(gameState == 4)
       text("A cannot make a move.", 650,370);
     else if(gameState == 8)
-      text("You cannot make a move.", 648,370);
+      text("You cannot make a move.", 640,370);
     else
       text("Please confirm.", 685,370);
       
