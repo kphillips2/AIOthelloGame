@@ -1,6 +1,7 @@
 // Press 'q' to quit
 
 Board b = new Board();
+char[][] savedBoardState = new char[8][8];
 Computer computer;
 Human human;
 
@@ -70,6 +71,11 @@ void draw()
     text("a move.", 720,390);
     text("Please confirm.", 680,420);
     drawConfirmButton();
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        savedBoardState[i][j] = char(b.board[i][j]);
+      }
+    }
   }
   
   //A makes its move
@@ -103,8 +109,8 @@ void draw()
       text("You cannot make a move.", 640,370);
     else
       text("Please confirm.", 685,370);
-      
     drawConfirmButton();
+    highlightChanges();
   }
   
   //Ask user to make move
@@ -113,6 +119,11 @@ void draw()
     drawScoreBoard();
     fill(0);
     text("Please make a move.", 660,370);
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        savedBoardState[i][j] = char(b.board[i][j]);
+      }
+    }
   }
   
   else if(gameState == 9)
@@ -141,6 +152,17 @@ void drawScoreBoard()
     
   text("White Score", 695,180);
   text(b.getScore('W'), 750,220);
+}
+
+void highlightChanges(){
+  for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        if(char(savedBoardState[i][j]) != char(b.board[i][j])){
+          fill(255,255,0,70);
+          rect(30 + j*70, 30 + i*70, 70,70);
+      }
+    }
+  }
 }
 
 void drawBoard()
