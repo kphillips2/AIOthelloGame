@@ -11,7 +11,7 @@ public class Human extends Computer{
   }
   
   // Uses clicked coordinates of mouse to determine move
-  int[] makeMove(Board b, int x, int y){
+  int[] makeMove(int x, int y){
     int[] move = {-1,-1};
     
     for(int i = 0; i < 8; i++)

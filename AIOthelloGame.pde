@@ -278,7 +278,7 @@ void mousePressed()
   //Pass clicked coordinates to Human, make move if possible
   else if(gameState == 6)
   {
-    int[] move = human.makeMove(b, mouseX, mouseY);
+    int[] move = human.makeMove(mouseX, mouseY);
     if(move[0] != -1)
     {
       boolean success = b.makeMove(move[0], move[1], human.getColor());
