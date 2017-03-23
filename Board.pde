@@ -21,6 +21,7 @@ class Board
 {
   // stored as black move, white move
   int[][] lastTwoMoves = {{-1, -1}, {-1, -1}};
+  ArrayList<char[][]> moveStack = new ArrayList<char[][]>();
   ArrayList<Move> moves = new ArrayList<Move>();
   char[][] board = new char[8][8];
   
@@ -72,11 +73,16 @@ class Board
    * reverts the last two moves
    */
   public void undo(){
-    if(moves.size() < 2)
+    if(moveStack.size() < 1)
       return;
-    moves.remove(moves.size() - 1);
-    moves.remove(moves.size() - 1);
-    setUpBoard();
+    
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        board[i][j] = moveStack.get(moveStack.size() - 1)[i][j];
+        print(board[i][j]);
+      }
+    }
+    moveStack.remove(moveStack.size() - 1);
   }
   
   public void reset(){
@@ -95,11 +101,20 @@ class Board
   
   public boolean makeMove(int row, int column, char colour)
   {
+    char[][] tempArray = new char[8][8];
+    for(int i = 0; i < 8; i++){
+      for(int j = 0; j < 8; j++){
+        tempArray[i][j] = board[i][j];
+      }
+    }
+    moveStack.add(tempArray);
     if (0 < checkMove(colour, row, column, true)){
       moves.add(new Move(row, column, colour));
       return true;
-    }else
+    }else{
+      moveStack.remove(moveStack.size() - 1);
       return false;
+    }
   }
   
   public int getNumberPresent(char colour){

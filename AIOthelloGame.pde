@@ -291,4 +291,8 @@ void mousePressed()
 void keyPressed()
 {
   if(key == 'q') exit();
+  if(key == 'z'){
+    b.undo();
+    
+  }
 }
