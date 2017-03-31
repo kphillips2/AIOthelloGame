@@ -4,6 +4,11 @@ Board b = new Board();
 char[][] savedBoardState = new char[8][8];
 Computer computer;
 Human human;
+int flashText = 0;
+int[] threadedMove;
+boolean moveMade = false;
+boolean makingMove = false;
+int timer = 600;
 
 int gameState = 0;  // 0 - ask configuration 
                     // 1 - ask color 
@@ -15,6 +20,7 @@ int gameState = 0;  // 0 - ask configuration
                     // 7 - confirm after player move
                     // 8 - player's turn, but they have no possible moves
                     // 9 - game over
+                    // 10 - AI time out
 
 void setup()
 {
@@ -31,6 +37,11 @@ void draw()
   strokeWeight(2);
   rect(630,30, 250,560);
   strokeWeight(1);
+  if(flashText > 0){
+    fill(255,0,0,(255/30)*flashText);
+    text("Move Undone", 680,330);
+    flashText--;
+  }
   
   //Select Initial Configuration
   if(gameState == 0)
@@ -82,19 +93,36 @@ void draw()
   else if(gameState == 3)
   {
     drawScoreBoard();
-    int[] move = computer.makeMove(b);
-
-    if(move[0] == -1)
-    {
-      if(b.possibleMoves(human.getColor()).size() == 0)
-        gameState = 9;
-      else
-        gameState = 4;
+    if(makingMove == false){
+      makingMove = true;
+      thread("makeThreadedMove");
     }
-    else
-    {
-      b.makeMove(move[0], move[1], computer.getColor());
-      gameState = 5;
+    //Check for timeout and update timer
+    timer--;
+    pushStyle();
+    fill(240,0,0);
+    textFont(createFont("Segoe UI Bold", 72));
+    text(float(timer)/60.0, 640, 430);
+    popStyle();
+    if(timer <= 0){
+      gameState = 10;
+    }
+
+    if(moveMade && timer > 0){
+      if(threadedMove[0] == -1)
+      {
+        if(b.possibleMoves(human.getColor()).size() == 0)
+          gameState = 9;
+        else
+          gameState = 4;
+      }
+      else
+      {
+        b.makeMove(threadedMove[0], threadedMove[1], computer.getColor());
+        gameState = 5;
+      }
+      makingMove = false;
+      timer = 600;
     }
   }
   
@@ -132,6 +160,21 @@ void draw()
     fill(0);
     text("GAME OVER", 690,370);
   }
+  
+  else if(gameState == 10)
+  {
+    drawScoreBoard();
+    fill(0);
+    text("AI timed out, FAILURE", 690,370);
+  }
+}
+
+void makeThreadedMove(){
+  moveMade = false;
+  delay(5000);
+  threadedMove = computer.makeMove(b);
+  moveMade = true;
+  return;
 }
 
 void drawConfirmButton()
@@ -292,7 +335,10 @@ void keyPressed()
 {
   if(key == 'q') exit();
   if(key == 'z'){
-    b.undo();
-    
+    if(gameState == 6){
+      b.undo();
+      b.undo();
+      flashText = 60;
+    }
   }
 }
