@@ -50,7 +50,7 @@ class Board
 
   public boolean isLegal(int row, int column, char colour)
   {
-    return 0 < checkMove(colour, row, column, false);
+    return 0 < checkMove(board, colour, row, column, false);
     
   }
 
@@ -106,13 +106,20 @@ class Board
       }
     }
     moveStack.add(tempArray);
-    if (0 < checkMove(colour, row, column, true)){
+    if (0 < checkMove(board, colour, row, column, true)){
       moves.add(new Move(row, column, colour));
       return true;
     }else{
       moveStack.remove(moveStack.size() - 1);
       return false;
     }
+  }
+  
+  /**
+   * Pass in a board array to make a move on it
+   */
+  public static void moveBoard(char[][] theBoard, int row, int column, char colour){
+      checkMove(theBoard, colour, row, column, true);
   }
   
   public int getNumberPresent(char colour){
@@ -139,7 +146,7 @@ class Board
     for(int row = 0; row < 8; row++){
       for(int column = 0; column < 8; column++){
         if(board[row][column] == 'E'){
-          int numFlipped = checkMove(colour, row, column, false);
+          int numFlipped = checkMove(board, colour, row, column, false);
           if(numFlipped > 0){
             int[] moveStats = {row, column, numFlipped};
             stats.add(moveStats);
@@ -160,21 +167,21 @@ class Board
    * @param toFlip tell is the move is actually being played
    * @return number of tokens that would be flipped
    */
-  private int checkMove(char colour, int row, int column, boolean toFlip){
-    if(board[row][column] != 'E'){
+  private static int checkMove(char[][] theBoard, char colour, int row, int column, boolean toFlip){
+    if(theBoard[row][column] != 'E'){
       return 0;
     }
     int total = 0;
     for(int rowIncrement = -1; rowIncrement <= 1; rowIncrement++){
       for(int columnIncrement = -1; columnIncrement <= 1; columnIncrement++){
-        int currentCheck = checkDirection(colour, row, column,
+        int currentCheck = checkDirection(theBoard, colour, row, column,
                                           toFlip, rowIncrement, columnIncrement);
         if (currentCheck != -1)
           total += currentCheck;
       }
     }
     if (toFlip && total > 0)
-      board[row][column] = colour;
+      theBoard[row][column] = colour;
     return total;
   }
   
@@ -193,7 +200,7 @@ class Board
    * @param columnIncrement  tells the column direction to iterate can either be -1, 0, or 1
    * @return number of tokens that would be flipped, -1 none flipped in direction
    */
-  private int checkDirection(char colour, int row, int column, boolean toFlip,
+  private static int checkDirection(char[][] theBoard, char colour, int row, int column, boolean toFlip,
 							 int rowIncrement, int columnIncrement){
     row += rowIncrement;
     column += columnIncrement;
@@ -201,17 +208,16 @@ class Board
       return -1;
     else if(column < 0 || column > 7 || row < 0 || row > 7)
       return -1;
-    else if(board[row][column] == colour)
+    else if(theBoard[row][column] == colour)
       return 0;
-    else if(board[row][column] == getOppositeColour(colour)){
+    else if(theBoard[row][column] == getOppositeColour(colour)){
       // recursively check next piece
-      int checkedMoves = checkDirection(colour, row, 
-                                        column, 
+      int checkedMoves = checkDirection(theBoard, colour, row, column, 
                                         toFlip, rowIncrement, columnIncrement);
       if(checkedMoves == -1)
         return -1;
       else if (toFlip)
-        board[row][column] = colour;
+        theBoard[row][column] = colour;
       return checkedMoves + 1; // This is a successfull direction
       
     }else // this case catches if the space is empty
@@ -221,7 +227,7 @@ class Board
   /**
    * gets the opposite colour. Must be given either 'W' or 'B'
    */
-  private char getOppositeColour(char colour) throws IllegalArgumentException{
+  public static char getOppositeColour(char colour) throws IllegalArgumentException{
     if (colour == 'W')
       return 'B';
     else if (colour == 'B')
