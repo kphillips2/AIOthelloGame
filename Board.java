@@ -30,7 +30,6 @@ class Board
     setUpBoard();
   }
   
-  
   void setLayout(int layout)
   {
     if(layout == 0)
