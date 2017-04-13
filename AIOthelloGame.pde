@@ -171,7 +171,7 @@ void draw()
 
 void makeThreadedMove(){
   moveMade = false;
-  delay(5000);
+  //delay(5000);
   threadedMove = computer.makeMove(b);
   moveMade = true;
   return;
