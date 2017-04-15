@@ -22,10 +22,10 @@ public class BestFirstComputer extends Computer
     move[1] = checkMove[1];
     int bestHeuristic = getHeuristic(board, checkMove[0], checkMove[1], checkMove[2]);
     int nextHeuristic;
-    System.out.println(Arrays.toString(checkMove));
+    //System.out.println("Here are the possible moves\n" + Arrays.toString(checkMove));
     for(int i = 1; i < possibleMoves.size(); i++){
       checkMove = possibleMoves.get(i);
-      System.out.println(Arrays.toString(checkMove));
+      //System.out.println(Arrays.toString(checkMove));
 
       nextHeuristic = getHeuristic(board, checkMove[0], checkMove[1], checkMove[2]);
       if(nextHeuristic > bestHeuristic){

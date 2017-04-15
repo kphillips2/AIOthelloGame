@@ -295,13 +295,13 @@ void mousePressed()
   {
     if(mouseX > 680 && mouseX < 740 && mouseY > 410 && mouseY < 470)
     {
-      computer = new Computer('W');
+      computer = new BestFirstComputer('W');
       human = new Human('B');
       enterHumanTurn();
     }
     else if(mouseX > 780 && mouseX < 840 && mouseY > 410 && mouseY < 470)
     {
-      computer = new Computer('B');
+      computer = new BestFirstComputer('B');
       human = new Human('W');
       gameState = 2;
     }
