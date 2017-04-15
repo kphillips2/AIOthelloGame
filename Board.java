@@ -53,6 +53,14 @@ class Board
     return 0 < checkMove(board, colour, row, column, false);
     
   }
+  
+  public char[][] getBoardArrayCopy(){
+    char[][] returnArray = new char[8][];
+    for(int i = 0; i < 8; i++){
+      returnArray[i] = board[i].clone();
+    }
+    return returnArray;
+  }
 
   public int getScore(char colour)
   {
