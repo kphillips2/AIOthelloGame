@@ -39,6 +39,6 @@ public class ABPruningComputer extends Player{
    }
    
    double getHeuristic(char[][] theBoard){
-      return 0.0;
+      return Board.getNumberOf(theBoard, colour);
    }
 }

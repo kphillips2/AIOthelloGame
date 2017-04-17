@@ -136,10 +136,14 @@ class Board
   }
   
   public int getNumberPresent(char colour){
+    return getNumberOf(board, colour);
+  }
+  
+  public static int getNumberOf(char[][] theBoard, char colour){
     int total = 0;
     for(int row = 0; row < 8; row++){
       for(int column = 0; column < 8; column++){
-        if(board[row][column] == colour)
+        if(theBoard[row][column] == colour)
           total++;
       }
     }
