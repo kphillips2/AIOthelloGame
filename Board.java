@@ -22,7 +22,7 @@ class Board
   // stored as black move, white move
   int[][] lastTwoMoves = {{-1, -1}, {-1, -1}};
   ArrayList<char[][]> moveStack = new ArrayList<char[][]>();
-  ArrayList<Move> moves = new ArrayList<Move>();
+  //ArrayList<Move> moves = new ArrayList<Move>();
   char[][] board = new char[8][8];
   
   Board()
@@ -96,7 +96,7 @@ class Board
   }
   
   public void reset(){
-    moves = new ArrayList<Move>();
+    //moves = new ArrayList<Move>();
     setUpBoard();
   }
   
@@ -104,9 +104,9 @@ class Board
     for(int row = 0; row < 8; row++)
       for(int column = 0; column < 8; column++)
         board[row][column] = 'E';
-    for(Move m : moves){
+    /*for(Move m : moves){
       makeMove(m.row, m.column, m.colour);
-    }
+    }*/
   }
   
   public boolean makeMove(int row, int column, char colour)
@@ -119,7 +119,7 @@ class Board
     }
     moveStack.add(tempArray);
     if (0 < checkMove(board, colour, row, column, true)){
-      moves.add(new Move(row, column, colour));
+      //moves.add(new Move(row, column, colour));
       return true;
     }else{
       moveStack.remove(moveStack.size() - 1);
@@ -259,7 +259,7 @@ class Board
   
   /**
    * Used to store the move data
-   */
+   *
   private class Move{
     public final int row;
     public final int column;
@@ -269,7 +269,7 @@ class Board
       this.row = row;
       this.column = column;
       this.colour = colour;
-    }
+    }*/
   }
   
 }
