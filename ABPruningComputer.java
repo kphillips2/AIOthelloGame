@@ -19,7 +19,8 @@ public class ABPruningComputer extends Player{
     * places that can be pruned. The function will not modify theBoard but can call
     * Board.copyBoard(theBoard) which will return a deep copy of the board. This copy
     * can be modified and passed down to the next call. The root is at height 0. The 
-    * function will stop at height 3 and calculate heuristics at that height.
+    * function will stop at height 3 and calculate heuristics at that height. Use
+    * height (if it is even or odd) to determine whos move it is.
     *
     * Here is a helpful video for the algorithm: https://youtu.be/xBXHtz4Gbdo
     * 
