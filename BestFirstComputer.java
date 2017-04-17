@@ -10,7 +10,7 @@ public class BestFirstComputer extends Computer
   
   int[] makeMove(Board b)
   {
-    int[] move = {0, 0};
+    int[] move = {-1, -1};
     char[][] board = b.getBoardArrayCopy();
     ArrayList<int[]> possibleMoves = b.possibleMoves(colour);
     
