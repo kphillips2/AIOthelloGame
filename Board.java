@@ -24,6 +24,7 @@ class Board
   ArrayList<char[][]> moveStack = new ArrayList<char[][]>();
   //ArrayList<Move> moves = new ArrayList<Move>();
   char[][] board = new char[8][8];
+  int layout;
   
   Board()
   {
@@ -32,6 +33,7 @@ class Board
   
   void setLayout(int layout)
   {
+    this.layout = layout;
     if(layout == 0)
     {
       board[3][3] = 'B';
@@ -87,11 +89,12 @@ class Board
     if(moveStack.size() < 1)
       return;
     
-    for(int i = 0; i < 8; i++){
+    /*for(int i = 0; i < 8; i++){
       for(int j = 0; j < 8; j++){
         board[i][j] = moveStack.get(moveStack.size() - 1)[i][j];
       }
-    }
+    }*/
+    board = moveStack.get(moveStack.size() - 1);
     moveStack.remove(moveStack.size() - 1);
   }
   
@@ -111,18 +114,18 @@ class Board
   
   public boolean makeMove(int row, int column, char colour)
   {
-    char[][] tempArray = new char[8][8];
-    for(int i = 0; i < 8; i++){
-      for(int j = 0; j < 8; j++){
-        tempArray[i][j] = board[i][j];
-      }
-    }
-    moveStack.add(tempArray);
     if (0 < checkMove(board, colour, row, column, true)){
       //moves.add(new Move(row, column, colour));
+      char[][] tempArray = new char[8][8];
+      for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+          tempArray[i][j] = board[i][j];
+        }
+      }
+      moveStack.add(tempArray);
       return true;
     }else{
-      moveStack.remove(moveStack.size() - 1);
+      //moveStack.remove(moveStack.size() - 1);
       return false;
     }
   }
@@ -269,7 +272,7 @@ class Board
       this.row = row;
       this.column = column;
       this.colour = colour;
-    }*/
-  }
+    }
+  }*/
   
 }
