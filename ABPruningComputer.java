@@ -7,7 +7,10 @@ public class ABPruningComputer extends Player{
    int[] makeMove(Board b){
       int[] move = {-1, -1};
       char[][] board = b.getBoardArrayCopy();
-      
+      int[] theReturn = recursiveDecesnt(board, move, Double.NEGATIVE_INFINITY, 
+                                         Double.POSITIVE_INFINITY, 0);
+      move[0] = theReturn[0];
+      move[1] = theReturn[1];
       return move;
    }
    
@@ -31,14 +34,14 @@ public class ABPruningComputer extends Player{
     * @param alpha       Contains the current alpha value can be -Infinity
     * @param beta        Contains the current beta value can be Infinity
     * @param height      Contains the current height of the move being checked
-    * @return the best possible move
+    * @return the best possible move and the heuristic. So [row,column,heuristic]
     */
-   int[] recursiveDecesnt(char[][] theBoard, int[] currentMove, double alpha, double beta,
+   private int[] recursiveDecesnt(char[][] theBoard, int[] currentMove, double alpha, double beta,
                           int height){
       return currentMove;
    }
    
-   double getHeuristic(char[][] theBoard){
+   private double getHeuristic(char[][] theBoard){
       return Board.getNumberOf(theBoard, colour);
    }
 }
