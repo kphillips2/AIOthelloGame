@@ -28,7 +28,9 @@ class Board
   
   Board()
   {
-    setUpBoard();
+    for(int row = 0; row < 8; row++)
+      for(int column = 0; column < 8; column++)
+        board[row][column] = 'E';
   }
   
   void setLayout(int layout)
@@ -98,19 +100,20 @@ class Board
     moveStack.remove(moveStack.size() - 1);
   }
   
-  public void reset(){
+  /*public void reset(){
     //moves = new ArrayList<Move>();
     setUpBoard();
-  }
+  }*/
   
-  private void setUpBoard(){
+  /*private void setUpBoard(){
     for(int row = 0; row < 8; row++)
       for(int column = 0; column < 8; column++)
         board[row][column] = 'E';
+    setLayout(layout);
     /*for(Move m : moves){
       makeMove(m.row, m.column, m.colour);
-    }*/
-  }
+    }
+  }*/
   
   public boolean makeMove(int row, int column, char colour)
   {
