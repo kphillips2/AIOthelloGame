@@ -39,6 +39,22 @@ public class ABPruningComputer extends Player{
     */
    private int[] recursiveDecesnt(char[][] theBoard, int[] currentMove, double alpha, double beta,
                           int height){
+      char[][] newBoard = Board.copyBoard(theBoard);
+      // gets whos turn it is
+      char currentPlayer = colour;
+      if(height%2 == 1)
+         currentPlayer = Board.getOppositeColour(colour);
+         
+      // plays the move passed down
+      if(currentMove[0] != -1){
+         Board.moveBoard(newBoard, currentMove[0], currentMove[1], currentPlayer, true);
+      }                 
+      
+      if(height % 2 == 0){
+      
+      }else{
+         
+      }
       return currentMove;
    }
    
