@@ -55,9 +55,13 @@ class Board
   }
   
   public char[][] getBoardArrayCopy(){
+    return copyBoard(board);
+  }
+  
+  public static char[][] copyBoard(char[][] theBoard){
     char[][] returnArray = new char[8][];
     for(int i = 0; i < 8; i++){
-      returnArray[i] = board[i].clone();
+      returnArray[i] = theBoard[i].clone();
     }
     return returnArray;
   }
@@ -126,8 +130,9 @@ class Board
   /**
    * Pass in a board array to make a move on it
    */
-  public static void moveBoard(char[][] theBoard, int row, int column, char colour){
-      checkMove(theBoard, colour, row, column, true);
+  public static void moveBoard(char[][] theBoard, int row, int column, 
+                               char colour, boolean toFlip){
+      checkMove(theBoard, colour, row, column, toFlip);
   }
   
   public int getNumberPresent(char colour){
