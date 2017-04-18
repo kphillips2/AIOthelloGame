@@ -72,16 +72,7 @@ class Board
 
   public int getScore(char colour)
   {
-    int score = 0;
-    
-    for(int i = 0; i < 8; i++)
-      for(int j = 0; j < 8; j++)
-      {
-        if(board[i][j] == colour)
-          score++;
-      }
-    
-    return score;
+    return getNumberOf(board, colour);
   }
 
   /**
@@ -142,10 +133,6 @@ class Board
   public static void moveBoard(char[][] theBoard, int row, int column, 
                                char colour, boolean toFlip){
       checkMove(theBoard, colour, row, column, toFlip);
-  }
-  
-  public int getNumberPresent(char colour){
-    return getNumberOf(board, colour);
   }
   
   public static int getNumberOf(char[][] theBoard, char colour){
