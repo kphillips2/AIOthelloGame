@@ -115,10 +115,9 @@ class Board
     }
   }*/
   
-  public boolean makeMove(int row, int column, char colour)
+  public boolean makeMove(int row, int column, char colour, boolean save)
   {
-    if (0 < checkMove(board, colour, row, column, true)){
-      //moves.add(new Move(row, column, colour));
+    if(save){
       char[][] tempArray = new char[8][8];
       for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
@@ -126,9 +125,13 @@ class Board
         }
       }
       moveStack.add(tempArray);
+    }
+    if (0 < checkMove(board, colour, row, column, true)){
+      //moves.add(new Move(row, column, colour));
       return true;
     }else{
-      //moveStack.remove(moveStack.size() - 1);
+      if(save)
+        moveStack.remove(moveStack.size() - 1);
       return false;
     }
   }
