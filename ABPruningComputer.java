@@ -81,44 +81,37 @@ public class ABPruningComputer extends Computer{
       }else{
          ArrayList<int[]> possibleMoves = Board.getPossibleMoves(newBoard, currentPlayer);
          ArrayList<double[]> returnedMoves = new ArrayList<double[]>();
+         double[] chosenMove;
          
          if(possibleMoves.size() == 0){
             // if simulated player is unable to move
             int[] move = {-1, -1};
             returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
             
-         }else{
-            if(currentPlayer == colour){
-            // This is simulating the computers turn
-               for(int[] move : possibleMoves){
-                  // implement alpha beta pruning here
-                  returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
-               }
-               if(returnMove[0] == -1)
-                 return chooseMax(returnedMoves);
-               else{
-                 returnMove[2] = chooseMax(returnedMoves)[2];
-                 return returnMove;
-               }
-            }else{
-            // This is simulating the humans turn
-               for(int[] move : possibleMoves){
-                  // implement alpha beta pruning here
-                  returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
-               }
-               if(returnMove[0] == -1)
-                 return chooseMin(returnedMoves);
-               else{
-                 returnMove[2] = chooseMin(returnedMoves)[2];
-                 return returnMove;
-               }
-            }
          }
+         if(currentPlayer == colour){
+          // This is simulating the computers turn
+             for(int[] move : possibleMoves){
+                // implement alpha beta pruning here
+                returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+             }
+             chosenMove = chooseMax(returnedMoves);
+          }else{
+          // This is simulating the humans turn
+             for(int[] move : possibleMoves){
+                // implement alpha beta pruning here
+                returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+             }
+             chosenMove = chooseMin(returnedMoves);
+          }
+          // retunMove[0] == -1 indicates that the player could not move or needs a move to choose
+          if(returnMove[0] == -1)
+             return chosenMove;
+          else{
+             returnMove[2] = chosenMove[2];
+             return returnMove;
+          }
       }
-      // This is so it compiles
-      returnMove[0] = currentMove[0];
-      returnMove[1] = currentMove[1];
-      return returnMove;
    }
    
    private double getHeuristic(char[][] theBoard){
