@@ -1,9 +1,22 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
-public class ABPruningComputer extends Player{
+public class ABPruningComputer extends Computer{
    ABPruningComputer(char c){
       super(c);
    }
+   /*public static void main(String[] args){
+      Board b = new Board();
+      b.setLayout(1);
+      char[][] b1 = b.getBoardArrayCopy();
+      printBoard(b1);
+      Board.moveBoard(b1, 3, 2, 'B', true);
+      printBoard(b1);
+      
+      ABPruningComputer a = new ABPruningComputer('B');
+      a.makeMove(b);
+   }*/
+   
    int[] makeMove(Board b){
       int[] move = {-1, -1};
       char[][] board = b.getBoardArrayCopy();
@@ -11,6 +24,8 @@ public class ABPruningComputer extends Player{
                                          Double.POSITIVE_INFINITY, 0);
       move[0] = (int)theReturn[0];
       move[1] = (int)theReturn[1];
+      System.out.println("Chosen Heuristic: " + theReturn[2]);
+      System.out.println("Chosen Move: " + move[0] + " ," + move[1]);
       return move;
    }
    
@@ -43,19 +58,24 @@ public class ABPruningComputer extends Player{
       // gets whos turn it is
       char currentPlayer = colour;
       double[] returnMove = new double[3];
+      returnMove[0] = currentMove[0];
+      returnMove[1] = currentMove[1];
+      
       if(height%2 == 1)
          currentPlayer = Board.getOppositeColour(colour);
          
       // plays the move passed down
       if(currentMove[0] != -1){
-         Board.moveBoard(newBoard, currentMove[0], currentMove[1], currentPlayer, true);
+         System.out.println("Before");
+         printBoard(newBoard);
+         Board.moveBoard(newBoard, currentMove[0], currentMove[1], 
+                         Board.getOppositeColour(currentPlayer), true);
+         System.out.println("After");
+         printBoard(newBoard);
       }
       
       // If it's at the end then do the Heuristic
       if(height == 3){
-         returnMove = new double[3];
-         returnMove[0] = currentMove[0];
-         returnMove[1] = currentMove[1];
          returnMove[2] = getHeuristic(newBoard);
          return returnMove;
       }else{
@@ -74,14 +94,24 @@ public class ABPruningComputer extends Player{
                   // implement alpha beta pruning here
                   returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
                }
-               return chooseMax(returnedMoves); 
+               if(returnMove[0] == -1)
+                 return chooseMax(returnedMoves);
+               else{
+                 returnMove[2] = chooseMax(returnedMoves)[2];
+                 return returnMove;
+               }
             }else{
             // This is simulating the humans turn
                for(int[] move : possibleMoves){
                   // implement alpha beta pruning here
                   returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
                }
-               return chooseMin(returnedMoves);
+               if(returnMove[0] == -1)
+                 return chooseMin(returnedMoves);
+               else{
+                 returnMove[2] = chooseMin(returnedMoves)[2];
+                 return returnMove;
+               }
             }
          }
       }
@@ -120,5 +150,13 @@ public class ABPruningComputer extends Player{
             bestHeuristic = newHeuristic;
          }
       }
-      return moves.get(bestIndex);   }
+      return moves.get(bestIndex);   
+   }
+   
+   private static void printBoard(char[][] board){
+     for(int i = 0; i < board.length; i++){
+        System.out.println(Arrays.toString(board[i])); 
+      }
+      System.out.println();
+   }
 }
