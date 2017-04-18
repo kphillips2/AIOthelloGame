@@ -95,6 +95,7 @@ void draw()
     drawScoreBoard();
     if(makingMove == false){
       makingMove = true;
+      moveMade = false;
       thread("makeThreadedMove");
     }
     //Check for timeout and update timer
@@ -118,7 +119,7 @@ void draw()
       }
       else
       {
-        b.makeMove(threadedMove[0], threadedMove[1], computer.getColor());
+        b.makeMove(threadedMove[0], threadedMove[1], computer.getColor(), false);
         gameState = 5;
       }
       makingMove = false;
@@ -324,7 +325,7 @@ void mousePressed()
     int[] move = human.makeMove(mouseX, mouseY);
     if(move[0] != -1)
     {
-      boolean success = b.makeMove(move[0], move[1], human.getColor());
+      boolean success = b.makeMove(move[0], move[1], human.getColor(), true);
       if(success) gameState = 7;
     }
   }
