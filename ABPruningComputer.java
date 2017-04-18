@@ -70,10 +70,12 @@ public class ABPruningComputer extends Player{
          }else{
             if(currentPlayer == colour){
             // This is simulating the computers turn
-            
+               
+               return chooseMax(returnedMoves); 
             }else{
             // This is simulating the humans turn
-            
+               
+               return chooseMin(returnedMoves);
             }
          }
       }
@@ -86,4 +88,31 @@ public class ABPruningComputer extends Player{
    private double getHeuristic(char[][] theBoard){
       return Board.getNumberOf(theBoard, colour);
    }
+   
+   private double[] chooseMax(ArrayList<double[]> moves){
+      int bestIndex = 0;
+      double bestHeuristic = moves.get(0)[2];
+      double newHeuristic;
+      for(int i = 1; i < moves.size(); i++){
+         newHeuristic = moves.get(i)[2];
+         if(newHeuristic > bestHeuristic){
+            bestIndex = i;
+            bestHeuristic = newHeuristic;
+         }
+      }
+      return moves.get(bestIndex);
+   }
+   
+   private double[] chooseMin(ArrayList<double[]> moves){
+      int bestIndex = 0;
+      double bestHeuristic = moves.get(0)[2];
+      double newHeuristic;
+      for(int i = 1; i < moves.size(); i++){
+         newHeuristic = moves.get(i)[2];
+         if(newHeuristic < bestHeuristic){
+            bestIndex = i;
+            bestHeuristic = newHeuristic;
+         }
+      }
+      return moves.get(bestIndex);   }
 }
