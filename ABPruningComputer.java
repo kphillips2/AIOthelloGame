@@ -7,10 +7,10 @@ public class ABPruningComputer extends Player{
    int[] makeMove(Board b){
       int[] move = {-1, -1};
       char[][] board = b.getBoardArrayCopy();
-      int[] theReturn = recursiveDecesnt(board, move, Double.NEGATIVE_INFINITY, 
+      double[] theReturn = recursiveDecesnt(board, move, Double.NEGATIVE_INFINITY, 
                                          Double.POSITIVE_INFINITY, 0);
-      move[0] = theReturn[0];
-      move[1] = theReturn[1];
+      move[0] = (int)theReturn[0];
+      move[1] = (int)theReturn[1];
       return move;
    }
    
@@ -37,25 +37,36 @@ public class ABPruningComputer extends Player{
     * @param height      Contains the current height of the move being checked
     * @return the best possible move and the heuristic. So [row,column,heuristic]
     */
-   private int[] recursiveDecesnt(char[][] theBoard, int[] currentMove, double alpha, double beta,
+   private double[] recursiveDecesnt(char[][] theBoard, int[] currentMove, double alpha, double beta,
                           int height){
       char[][] newBoard = Board.copyBoard(theBoard);
       // gets whos turn it is
       char currentPlayer = colour;
+      double[] returnMove = new double[3];
       if(height%2 == 1)
          currentPlayer = Board.getOppositeColour(colour);
          
       // plays the move passed down
       if(currentMove[0] != -1){
          Board.moveBoard(newBoard, currentMove[0], currentMove[1], currentPlayer, true);
-      }                 
+      }
       
-      if(height % 2 == 0){
-      
+      // If it's at the end then do the Heuristic
+      if(height == 3){
+         returnMove = new double[3];
+         returnMove[0] = currentMove[0];
+         returnMove[1] = currentMove[1];
+         returnMove[2] = getHeuristic(newBoard);
+         return returnMove;
+      }else if(height % 2 == 0){
+         
       }else{
          
       }
-      return currentMove;
+      // This is so it compiles
+      returnMove[0] = currentMove[0];
+      returnMove[1] = currentMove[1];
+      return returnMove;
    }
    
    private double getHeuristic(char[][] theBoard){
