@@ -70,11 +70,17 @@ public class ABPruningComputer extends Player{
          }else{
             if(currentPlayer == colour){
             // This is simulating the computers turn
-               
+               for(int[] move : possibleMoves){
+                  // implement alpha beta pruning here
+                  returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+               }
                return chooseMax(returnedMoves); 
             }else{
             // This is simulating the humans turn
-               
+               for(int[] move : possibleMoves){
+                  // implement alpha beta pruning here
+                  returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+               }
                return chooseMin(returnedMoves);
             }
          }
