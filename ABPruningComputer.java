@@ -104,7 +104,8 @@ public class ABPruningComputer extends Computer{
              }
              chosenMove = chooseMin(returnedMoves);
           }
-          // retunMove[0] == -2 indicates that it is the node
+          // retunMove[0] == -2 indicates that it is the first node (needs to return 
+          // best move to make
           if(returnMove[0] == -2)
              return chosenMove;
           else{
