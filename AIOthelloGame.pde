@@ -1,5 +1,22 @@
-// Press 'q' to quit
-
+/**
+ * Press 'q' to quit
+ * Press 'z' to undo
+ * This program runs Othello. In order to run this program, make sure you
+ * have processing downloaded/installed. It took a while for it to 
+ * download for me - Evan
+ * From there open AIOthelloGame and click the play button at the top left
+ * There you go! The game will be running and the output for the 
+ * best first + ABpruning will be at the bottom of the screen that has
+ * our code displayed.
+ * One of us can bring it into your office hours as well to show you.
+ *
+ * CPSC 427-02
+ * Assignment 12
+ * Evan Srock (esrock)
+ * Patrick Chadbourne
+ * Katie Phillips
+ * 
+ */
 Board b = new Board();
 char[][] savedBoardState = new char[8][8];
 Computer computer;
