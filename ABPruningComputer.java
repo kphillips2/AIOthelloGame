@@ -86,21 +86,22 @@ public class ABPruningComputer extends Computer{
          if(possibleMoves.size() == 0){
             // if simulated player is unable to move
             int[] move = {-1, -1};
-            returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+            chosenMove = recursiveDescent(newBoard, move, alpha, beta, height + 1);
             
-         }
-         if(currentPlayer == colour){
+         }else if(currentPlayer == colour){
           // This is simulating the computers turn
              for(int[] move : possibleMoves){
-                // implement alpha beta pruning here
                 returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+                // implement alpha beta pruning her
+                
              }
              chosenMove = chooseMax(returnedMoves);
           }else{
           // This is simulating the humans turn
              for(int[] move : possibleMoves){
-                // implement alpha beta pruning here
-                returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+               returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+               // implement alpha beta pruning here
+               
              }
              chosenMove = chooseMin(returnedMoves);
           }
