@@ -18,7 +18,7 @@ public class ABPruningComputer extends Computer{
    }*/
    
    int[] makeMove(Board b){
-      int[] move = {-1, -1};
+      int[] move = {-2, -2};
       char[][] board = b.getBoardArrayCopy();
       double[] theReturn = recursiveDescent(board, move, Double.NEGATIVE_INFINITY, 
                                          Double.POSITIVE_INFINITY, 0);
@@ -65,7 +65,7 @@ public class ABPruningComputer extends Computer{
          currentPlayer = Board.getOppositeColour(colour);
          
       // plays the move passed down
-      if(currentMove[0] != -1){
+      if(currentMove[0] >= 0){
          System.out.println("Before");
          printBoard(newBoard);
          Board.moveBoard(newBoard, currentMove[0], currentMove[1], 
@@ -104,8 +104,8 @@ public class ABPruningComputer extends Computer{
              }
              chosenMove = chooseMin(returnedMoves);
           }
-          // retunMove[0] == -1 indicates that the player could not move or needs a move to choose
-          if(returnMove[0] == -1)
+          // retunMove[0] == -2 indicates that it is the node
+          if(returnMove[0] == -2)
              return chosenMove;
           else{
              returnMove[2] = chosenMove[2];
