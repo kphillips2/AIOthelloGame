@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -24,8 +27,9 @@ public class ABPruningComputer extends Computer{
                                          Double.POSITIVE_INFINITY, 0);
       move[0] = (int)theReturn[0];
       move[1] = (int)theReturn[1];
-      System.out.println("Chosen Heuristic: " + theReturn[2]);
-      System.out.println("Chosen Move: " + move[0] + " ," + move[1]);
+      //System.out.println("Chosen Heuristic: " + theReturn[2]);
+      //System.out.println("Chosen Move: " + move[0] + " ," + move[1]);
+      System.out.println();
       return move;
    }
    
@@ -63,16 +67,20 @@ public class ABPruningComputer extends Computer{
       
       if(height%2 == 1)
          currentPlayer = Board.getOppositeColour(colour);
-         
+      
       // plays the move passed down
       if(currentMove[0] >= 0){
-         System.out.println("Before");
-         printBoard(newBoard);
          Board.moveBoard(newBoard, currentMove[0], currentMove[1], 
                          Board.getOppositeColour(currentPlayer), true);
-         System.out.println("After");
-         printBoard(newBoard);
+         //System.out.println("After");
+         //printBoard(newBoard);
       }
+      
+      System.out.println("Node @ height: " + height + "\n" +
+                         "With move decided on (indexes starting at 0, under 0 means no move): row: "
+                         + currentMove[0] + " column: " + currentMove[1] +
+                         "\nTheoretically made by: " + Board.getOppositeColour(currentPlayer));
+      printBoard(newBoard);
       
       // If it's at the end then do the Heuristic
       if(height == 3){
@@ -158,10 +166,11 @@ public class ABPruningComputer extends Computer{
       return moves.get(bestIndex);   
    }
    
+   // Used for error checking
    private static void printBoard(char[][] board){
      for(int i = 0; i < board.length; i++){
         System.out.println(Arrays.toString(board[i])); 
       }
-      System.out.println();
+      //System.out.println();
    }
 }
