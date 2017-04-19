@@ -89,19 +89,29 @@ public class ABPruningComputer extends Computer{
             chosenMove = recursiveDescent(newBoard, move, alpha, beta, height + 1);
             
          }else if(currentPlayer == colour){
+             double[] checkMove;
           // This is simulating the computers turn
              for(int[] move : possibleMoves){
-                returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
-                // implement alpha beta pruning her
-                
+                checkMove = recursiveDescent(newBoard, move, alpha, beta, height + 1);
+                returnedMoves.add(checkMove);
+                // implement alpha beta pruning here
+                if(checkMove[2] > alpha)
+                  alpha = checkMove[2];
+                if(alpha > beta) // prune
+                  break;
              }
              chosenMove = chooseMax(returnedMoves);
           }else{
+             double[] checkMove;
           // This is simulating the humans turn
              for(int[] move : possibleMoves){
-               returnedMoves.add(recursiveDescent(newBoard, move, alpha, beta, height + 1));
+                checkMove = recursiveDescent(newBoard, move, alpha, beta, height + 1);
+                returnedMoves.add(checkMove);
                // implement alpha beta pruning here
-               
+               if(checkMove[2] < beta)
+                  beta = checkMove[2];
+                if(alpha > beta) // prune
+                  break;
              }
              chosenMove = chooseMin(returnedMoves);
           }
