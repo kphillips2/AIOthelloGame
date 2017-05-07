@@ -26,7 +26,7 @@ public class ABPruningComputer extends Computer{
       move[1] = (int)theReturn[1];
       //System.out.println("Chosen Heuristic: " + theReturn[2]);
       //System.out.println("Chosen Move: " + move[0] + " ," + move[1]);
-      System.out.println();
+      //System.out.println();
       return move;
    }
    
@@ -73,11 +73,11 @@ public class ABPruningComputer extends Computer{
          //printBoard(newBoard);
       }
       
-      System.out.println("Node @ height: " + height + "\n" +
+      /*System.out.println("Node @ height: " + height + "\n" +
                          "With move decided on (indexes starting at 0, under 0 means no move): row: "
                          + currentMove[0] + " column: " + currentMove[1] +
                          "\nTheoretically made by: " + Board.getOppositeColour(currentPlayer));
-      printBoard(newBoard);
+      printBoard(newBoard);*/
       
       // If it's at the end then do the Heuristic
       if(height == 3){
