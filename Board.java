@@ -146,6 +146,27 @@ class Board
     return total;
   }
   
+  public static int getWeightedNumberOf(char[][] theBoard, char colour){
+    int total = 0;
+    for(int row = 0; row < 8; row++){
+      for(int column = 0; column < 8; column++){
+        if(theBoard[row][column] == colour)
+          if(row == 0 || row == 7 || column == 0 || column == 7){
+            if(row == 1 || row == 6 || column == 1 || column == 6){
+              total -= 8;
+            }else{
+              total += 4;
+            }if((row == 0 || row == 7) && (column == 0 || column == 7)){
+              total += 12;
+            }
+          }else{
+            total++;
+          }
+      }
+    }
+    return total;
+  }
+  
   public ArrayList<int[]> possibleMoves(char colour){
     return getPossibleMoves(board, colour);
   }

@@ -81,7 +81,7 @@ public class ABPruningComputer extends Computer{
       
       // If it's at the end then do the Heuristic
       if(height == 3){
-         returnMove[2] = getHeuristic(newBoard);
+         returnMove[2] = getHeuristic(newBoard, currentPlayer);
          return returnMove;
       }else{
          ArrayList<int[]> possibleMoves = Board.getPossibleMoves(newBoard, currentPlayer);
@@ -131,8 +131,8 @@ public class ABPruningComputer extends Computer{
       }
    }
    
-   private double getHeuristic(char[][] theBoard){
-      return Board.getNumberOf(theBoard, colour);
+   private double getHeuristic(char[][] theBoard, char currentPlayer){
+      return Board.getWeightedNumberOf(theBoard, colour);
    }
    
    private double[] chooseMax(ArrayList<double[]> moves){
