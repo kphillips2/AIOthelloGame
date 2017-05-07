@@ -150,7 +150,7 @@ class Board
     int total = 0;
     for(int row = 0; row < 8; row++){
       for(int column = 0; column < 8; column++){
-        if(theBoard[row][column] == colour)
+        if(theBoard[row][column] == colour){
           if(row == 0 || row == 7 || column == 0 || column == 7){
             if(row == 1 || row == 6 || column == 1 || column == 6){
               total -= 8;
@@ -162,6 +162,7 @@ class Board
           }else{
             total++;
           }
+        }
       }
     }
     return total;
