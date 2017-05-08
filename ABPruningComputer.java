@@ -80,7 +80,7 @@ public class ABPruningComputer extends Computer{
       printBoard(newBoard);*/
       
       // If it's at the end then do the Heuristic
-      if(height == 9){
+      if(height == 8){
          returnMove[2] = getHeuristic(newBoard, currentPlayer);
          return returnMove;
       }else{
